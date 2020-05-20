@@ -77,13 +77,13 @@ export class Store {
 	}
 
 	async get (key: string) {
-		this.load()
+		await this.load()
 
 		return this.data[key]
 	}
 
 	async set (key: string | { [key: string]: any }, val?: any) {
-		this.load()
+		await this.load()
 
 		let dataChanged = false
 
@@ -110,17 +110,17 @@ export class Store {
 		}
 
 		if (dataChanged) {
-			this.save()
+			await this.save()
 		}
 	}
 
 	async has(key: string) {
-		this.load()
+		await this.load()
 
 		return !!this.data[key]
 	}
 
 	async toObject() {
-		return this.data || this.load()
+		return this.data || await this.load()
 	}
 }
