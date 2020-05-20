@@ -32,6 +32,10 @@ export class Store {
 		this.dirExists = false
 	}
 
+	private isNullOrEmptyData() {
+		return !this.data || !Object.keys(this.data).length
+	}
+
 	private async load() {
 		let data = this.data
 
@@ -40,7 +44,8 @@ export class Store {
 		}
 
 		try {
-			data = JSON.parse(new TextDecoder().decode(await Deno.readFile(this.filePath)))
+			const content = new TextDecoder().decode(await Deno.readFile(this.filePath))
+			data = content && JSON.parse(content)
 			this.dirExists = true
 		}
 		catch (e) {
@@ -58,7 +63,7 @@ export class Store {
 	private async save() {
 		const { data, filePath } = this
 
-		if (!data || !Object.keys(data).length) {
+		if (!this.data) {
 			return
 		}
 
@@ -117,7 +122,31 @@ export class Store {
 	async has(key: string) {
 		await this.load()
 
-		return !!this.data[key]
+		return this.data.hasOwnProperty(key)
+	}
+
+	async delete(key: string) {
+		if (this.isNullOrEmptyData()) {
+			return false
+		}
+
+		await this.load()
+
+		if (this.has(key)) {
+			delete this.data[key]
+			await this.save()
+		}
+
+		return true
+	}
+
+	async clear() {
+		if (this.isNullOrEmptyData()) {
+			return
+		}
+
+		this.data = {}
+		await this.save()
 	}
 
 	async toObject() {

@@ -21,8 +21,12 @@ await store.set({
   age: 25
 })
 
+await store.delete('username')
+
 await store.toObject()
-// --> { username: 'acathur', age: 25 }
+// --> { age: 25 }
+
+await store.clear()
 ```
 
 You can also initialize a new `Store` with the given `name` and `path`.
@@ -36,6 +40,15 @@ const store = new Store({
   path: './store'
 })
 ```
+
+## API
+
+- .set(key, value)
+- .get(key)
+- .has(key)
+- .delete(key)
+- .clear()
+- .toObject()
 
 ## License
 
