@@ -116,7 +116,10 @@ export class Store {
 
 		if (dataChanged) {
 			await this.save()
+			return true
 		}
+
+		return false
 	}
 
 	async has(key: string) {
@@ -125,19 +128,32 @@ export class Store {
 		return this.data.hasOwnProperty(key)
 	}
 
-	async delete(key: string) {
+	async delete(key: string | string[]) {
 		if (this.isNullOrEmptyData()) {
 			return false
 		}
 
 		await this.load()
 
-		if (this.has(key)) {
-			delete this.data[key]
-			await this.save()
+		let dataChanged = false
+
+		if (typeof key === 'string') {
+			key = [key]
 		}
 
-		return true
+		for (const k of key) {
+			if (this.has(k)) {
+				delete this.data[k]
+				dataChanged = true
+			}
+		}
+
+		if (dataChanged) {
+			await this.save()
+			return true
+		}
+
+		return false
 	}
 
 	async clear() {
