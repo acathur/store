@@ -1,4 +1,4 @@
-import { join } from 'https://deno.land/std/path/mod.ts'
+import { join } from 'https://deno.land/std@0.54.0/path/mod.ts'
 import { mkdir } from './utils.ts'
 
 export interface StoreOptions {
