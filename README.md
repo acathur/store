@@ -7,7 +7,7 @@ A key-value store that persists on disk for Deno.
 ## Usage
 
 ```ts
-import { Store } from 'https://deno.land/x/store/mod.ts'
+import { Store } from 'https://cdn.depjs.com/store/mod.ts'
 
 const store = new Store()
 
