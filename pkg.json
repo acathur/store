@@ -1,6 +1,6 @@
 {
   "name": "store",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "description": "A key-value store that persists on disk for Deno.",
   "main": "mod.ts",
   "repository": "https://github.com/acathur/store",
