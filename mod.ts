@@ -142,7 +142,7 @@ export class Store {
 		}
 
 		for (const k of key) {
-			if (this.has(k)) {
+			if (this.data.hasOwnProperty(k)) {
 				delete this.data[k]
 				dataChanged = true
 			}
